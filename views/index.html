@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="sv">
+    <head>
+        <title>Kimmunity</title>
+        <meta name="description" content="Den nya sociala medieplatformen">
+        <meta name="author" content="Kim Lindgren">
+        <meta name="copyright" content="Copyright © 2022 Kim Lindgren">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#481E24">
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';">
+        <meta name="referrer" content="no-referrer">
+
+        <link rel="stylesheet" href="/static/fonts/fira/regular/fonts.css" defer>
+        <link rel="stylesheet" href="/static/fonts/fira/condensed/fonts.css" defer>
+        <link rel="stylesheet" href="/static/fonts/fira/mono/fonts.css" defer>
+        <link rel="stylesheet" href="/static/stylesheets/interface.css" defer>
+        <link rel="stylesheet" href="/static/stylesheets/fancydialog.css" defer>
+        <link rel="stylesheet" href="/static/stylesheets/styles.css">
+
+        <script src="/static/scripts/request.js"></script>
+        <script src="/static/scripts/fancydialog.js"></script>
+        <script src="/static/scripts/glob.js"></script>
+        <script src="/static/scripts/posts.js"></script>
+        <script src="/static/scripts/events.js"></script>
+
+        <link rel="icon" type="image/png" href="/static/images/favicon.png">
+
+        <style>
+            main {
+                margin-top: 64px;
+                max-width: 600px;
+            }
+            
+            div#createPost {
+                position: relative;
+            }
+
+            textarea#newPostText {
+                width: 100%;
+                min-height: 80px;
+                margin-bottom: 10px;
+            }
+
+            div#imagesPane img {
+                position: relative;
+                margin: 0px 10px 10px 0px;
+                max-width: 64px;
+                max-height: 64px;
+                box-shadow: 0px 1px 4px var(--bg3);
+                border: 1px solid transparent;
+                transition: border-color 0.2s;
+            }
+
+            div#imagesPane img:hover {
+                border-color: var(--fg-alt2);
+            }
+
+            div#newPostButtonRow {
+                display: flex;
+                flex-direction: row;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="titlebar">
+            <a href="/"><h1 id="kimmunity">Kimmunity</h1></a>
+            <div id="search-container">
+                <label for="search" class="sr-only">Sök användare</label>
+                <input type="text" id="search" autocomplete="off">
+                <div id="search-dropdown">
+                    <div id="search-results"></div>
+                </div>
+            </div>
+            <input type="checkbox" id="chk-bell">
+            <label id="bell" for="chk-bell"><span class="sr-only">Visa händelser</span></label>
+            <div id="events">
+                <a id="my-profile" href="/my-profile">Min profil</a>
+                <a id="logout" href="/logout">Logga ut</a>
+                <h2 id="events">Händelser</h2>
+                <div></div>
+            </div>
+        </div>
+        <main>
+            <div class="rounded-block" id="createPost">
+                <h2 style="margin-top: 0px;">Vad har du på tankarna?</h2>
+                <label for="newPostText" class="sr-only">Författa ett nytt inlägg</label>
+                <textarea id="newPostText"></textarea>
+                <div id="imagesPane"></div>
+                <div id="newPostButtonRow">
+                    <input type="button" id="addImagesButton" value="Lägg till bilder">
+                    <div style="flex: 1;"></div>
+                    <input type="submit" id="submitPostButton" value="Publicera">
+                </div>
+            </div>
+            <div id="postsArea"></div>
+        </main>
+        <script>
+            let imagesPane = document.querySelector('#imagesPane');
+            function addImageToImagePane(f) {
+                let fileReader = new FileReader()
+                fileReader.addEventListener('load', (e) => {
+                    let img = createElement('img', {
+                        src: e.target.result,
+                        'tab-index': 0,
+                        role: 'button',
+                        'aria-label': `Ta bort ${f.name}`,
+                        title: `Ta bort ${f.name}`
+                    });
+                    img.file = f;
+                    imagesPane.appendChild(img);
+
+                    img.addEventListener('click', () => {
+                        imagesPane.removeChild(img);
+                    });
+                });
+                fileReader.readAsDataURL(f);
+            }
+
+            function typeWarningMessage() {
+                fancyAlert('Fel filformat', 'Tyvärr så tillåter vi bara bilder i JPEG-format.');
+            }
+
+            function sizeWarningMessage() {
+                fancyAlert('Dina filer är för stora', 'Vår stackars lilla server är liten och därför är den maximala filstorleken 10 megabyte.');
+            }
+
+            let addImagesButton = document.querySelector('#addImagesButton');
+            addImagesButton.addEventListener('click', () => {
+                let fileInput = createElement('input', {
+                    type: 'file',
+                    multiple: 'multiple',
+                    accept: 'image/jpeg'
+                });
+                fileInput.addEventListener('change', (e) => {
+                    let typeWarning = false;
+                    let sizeWarning = false;
+                    for(let x = 0; x < e.target.files.length; x++) {
+                        let i = e.target.files[x];
+                        if(i.type != 'image/jpeg') {
+                            if(!typeWarning) {
+                                typeWarning = true;
+                                typeWarningMessage();
+                            }
+                            continue;
+                        }
+
+                        if(i.size > 10000000) {
+                            if(!sizeWarning) {
+                                sizeWarning = true;
+                                sizeWarningMessage();
+                            }
+                            continue;
+                        }
+
+                        addImageToImagePane(i);
+                    }
+                }); 
+                fileInput.click();
+            });
+
+            let submitPostButton = document.querySelector('#submitPostButton');
+            let newPostText = document.querySelector('#newPostText');
+            let createPost = document.querySelector('#createPost');
+            submitPostButton.addEventListener('click', () => {
+                let postText = newPostText.value.trim();
+                if(postText == "") {
+                    fancyAlert('Tomt inlägg', 'Tycker ditt inlägg ser rätt tomt ut, några ord kan du väll lägga till?');
+                    return
+                }
+                
+                let data = new FormData();
+                data.append('content', postText);
+                let imgs = document.querySelectorAll('div#imagesPane img');
+                for(let x = 0; x < imgs.length; x++) {
+                    data.append(imgs[x].file.name, imgs[x].file);
+                }
+
+                new Request('/backend/posts')
+                    .setContentType(null)
+                    .setLoaderParent(createPost)
+                    .onSuccessJSON((d) => {
+                        let postsArea = document.querySelector('div#postsArea');
+                        newPostText.value = '';
+                        while(imagesPane.firstChild) imagesPane.removeChild(imagesPane.firstChild);
+                        postsArea.insertBefore(buildPostElement(d, true), postsArea.firstChild);
+                    })
+                    .onError((status, msg) => {
+                        console.log(status, msg);
+                    })
+                    .POST(data);
+            });
+
+            getPosts(Date.now().toFixed(), '', 'div#postsArea');
+            getEvents('div#events div');
+            getMorePostsOnScroll('', 'div#postsArea');
+        </script>
+        <script src="/static/scripts/search.js"></script>
+    </body>
+</html>

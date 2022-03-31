@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="sv">
+    <head>
+        <title>Kimmunity</title>
+        <meta name="description" content="Den nya sociala medieplatformen">
+        <meta name="author" content="Kim Lindgren">
+        <meta name="copyright" content="Copyright © 2022 Kim Lindgren">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#481E24">
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';">
+        <meta name="referrer" content="no-referrer">
+
+        <link rel="stylesheet" href="/static/fonts/fira/regular/fonts.css" defer>
+        <link rel="stylesheet" href="/static/fonts/fira/condensed/fonts.css" defer>
+        <link rel="stylesheet" href="/static/fonts/fira/mono/fonts.css" defer>
+        <link rel="stylesheet" href="/static/stylesheets/interface.css" defer>
+        <link rel="stylesheet" href="/static/stylesheets/fancydialog.css" defer>
+        <link rel="stylesheet" href="/static/stylesheets/styles.css">
+
+        <script src="/static/scripts/request.js"></script>
+        <script src="/static/scripts/fancydialog.js"></script>
+        <script src="/static/scripts/glob.js"></script>
+        <script src="/static/scripts/posts.js"></script>
+        <script src="/static/scripts/events.js"></script>
+
+        <link rel="icon" type="image/png" href="/static/images/favicon.png">
+
+        <style>
+            h1#kimmunity {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                display: block;
+                width: 260px;
+                height: 42px;
+                margin: 0px;
+                padding: 0px;
+                color: transparent;
+                background-image: url('/static/images/kimmunity_titlebar.svg');
+            }
+
+            main {
+                margin-top: 64px;
+                max-width: 600px;
+            }
+
+            #profilePicture {
+                display: inline-block;
+                width: 200px;
+                height: 200px;
+                box-shadow: 0px 3px 6px var(--bg3), 0px 6px 12px var(--bg3);
+            }
+
+            h2#username {
+                color: var(--fg-alt1);
+                text-align: center;
+                font-size: 1.8em;
+                margin: 10px 0px 10px 0px;
+            }
+
+            div#userInfoArea {
+                position: relative;
+            }
+
+            div#userInfoArea input[type="button"].context-menu {
+                position: absolute;
+                top: 0px;
+                right: 0px;
+            }
+
+            div#userInfoArea div.context-menu {
+                position: absolute;
+                top: 32px;
+                right: 0px;
+            }
+
+            div#followInfo {
+                display: flex;
+                flex-direction: row;
+            }
+
+            div#followInfo div {
+                flex: 1;
+                text-align: center;
+            }
+
+            p#followers, p#following {
+                font-family: 'Fira Mono', monospace;
+                font-size: 1.2em;
+            }
+
+            div#followInfo div h3 {
+                color: var(--fg-alt3);
+            }
+
+            div#followInfo div h3, p#followers, p#following {
+                margin: 0px 0px 10px 0px;
+            }
+
+            input.follow-button {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            input.follow-button.following {
+                width: 100%;
+                margin-bottom: 10px;
+                color: var(--bg2) !important;
+                border: 1px solid var(--fg-alt1);
+                background-color: var(--fg-alt1);
+                background-image: linear-gradient(var(--fg-alt2), var(--fg-alt3));
+            }
+
+            input.follow-button.following:hover,  input.follow-button.following:focus {
+                background-image: linear-gradient(var(--fg-alt1), var(--fg-alt2));
+            }
+
+            input.follow-button.following:active {
+                background-image: linear-gradient(var(--fg-alt3), var(--fg-alt2));
+            }
+        </style>
+    </head>
+    <body>
+        <div id="titlebar">
+            <a href="/"><h1 id="kimmunity">Kimmunity</h1></a>
+            <div id="search-container">
+                <label for="search" class="sr-only">Sök användare</label>
+                <input type="text" id="search" autocomplete="off">
+                <div id="search-dropdown">
+                    <div id="search-results"></div>
+                </div>
+            </div>
+            <input type="checkbox" id="chk-bell">
+            <label id="bell" for="chk-bell"><span class="sr-only">Visa händelser</span></label>
+            <div id="events">
+                <a id="my-profile" href="/my-profile">Min profil</a>
+                <a id="logout" href="/logout">Logga ut</a>
+                <h2 id="events">Händelser</h2>
+                <div></div>
+            </div>
+        </div>
+        <main>
+            <div id="userInfoArea">
+                <div style="text-align: center">
+                    <div id="profilePicture" class="profile-pic" style="position: relative"></div>
+                </div>
+                <h2 id="username"></h2>
+                <div id="followInfo">
+                    <div>
+                        <h3>Följare</h3>
+                        <p id="followers"></p>
+                    </div>
+                    <div>
+                        <h3>Följer</h3>
+                        <p id="following"></p>
+                    </div>
+                </div>
+            </div>
+            <div id="postsArea"></div>
+        </main>
+        <script>
+            let u = window.location.href.match(/(?:https?\:\/\/)?[\w\.\_\-]+\/users\/([a-zA-Z0-9_-]{3,})/);
+            let username = u[1];
+
+            let pPic = document.querySelector('#profilePicture');
+            pPic.style.backgroundImage = `url('/backend/users/${username}/profile-picture')`;
+
+            let pUsr = document.querySelector('h2#username');
+            let pFollowers = document.querySelector('#followers');
+            let pFollowing = document.querySelector('#following');
+            let userInfoArea = document.querySelector('#userInfoArea');
+
+            function updateAllProfilePictures() {
+                let pe = document.querySelectorAll('div.profile-pic');
+                for(let x = 0; x < pe.length; x++) {
+                    pe[x].style.backgroundImage = `url('/backend/users/${username}/profile-picture?time=${Math.round(Date.now())}')`;
+                }
+            }
+
+            function confirmImageDialog(f) {
+                let dialog = new FancyDialog('Bekräfta ny profilbild');
+                let pImg = createElement('div', {class: 'profile-pic'});
+                    pImg.style.width = '300px';
+                    pImg.style.height = '300px';
+                let pConfirm = createElement('input', {type: 'submit', value: 'Använd bilden'});
+
+                let fileReader = new FileReader()
+                fileReader.addEventListener('load', (e) => {
+                    pImg.style.backgroundImage = `url(${e.target.result})`;
+                });
+                fileReader.readAsDataURL(f);
+
+                dialog.content.appendChild(pImg);
+                dialog.buttons.appendChild(pConfirm);
+
+                pConfirm.addEventListener('click', () => {
+                    let data = new FormData();
+                    data.append('profile-picture', f);
+
+                    new Request(`/backend/users/${username}/profile-picture`)
+                        .setContentType(null)
+                        .setLoaderParent(pPic)
+                        .onSuccess(() => {
+                            updateAllProfilePictures();
+                        })
+                        .onError((status, msg) => {
+                            if(status == 406) {
+                                fancyAlert('Fel filtyp', 'Det där verkade inte vara en .JPEG-fil!');
+                            } else {
+                                fancyAlert('Oväntat fel', `Ett oväntat fel har inträffat. ${formatStatusCode(status)}`)
+                            }
+                        })
+                        .POST(data);
+                    
+                    dialog.hide();
+                })
+
+                dialog.show();
+            }
+
+            function createContextMenu(uname) {
+                let pBtn = createElement('input', {type: 'button', class: 'context-menu'});
+                let pCtx = createElement('div', {class: 'context-menu'});
+                let pDel = createElement('input', {type: 'button', value: 'Radera kontot'});
+                let pPicA = createElement('input', {type: 'button', value: 'Byt profilbild'});
+                let pPicB = createElement('input', {type: 'button', value: 'Ta bort profilbild'});
+                let pName = createElement('input', {type: 'button', value: 'Ändra visningsnamn'});
+
+                pPicA.addEventListener('click', () => {
+                    let fileInput = createElement('input', {
+                        type: 'file',
+                        accept: 'image/jpeg'
+                    });
+                    fileInput.addEventListener('change', (e) => {
+                        if(e.target.files.length == 0) return;
+
+                        let i = e.target.files[0];
+                        if(i.type != 'image/jpeg') {
+                            fancyAlert('Fel filformat', 'Tyvärr så accepterars endast .JPEG-filer.');
+                            return
+                        }
+
+                        if(i.size > 10000000) {
+                            fancyAlert('För stor', 'Servern är liten, därför kan vi inte acceptera filer över 10 megabyte.');
+                            return
+                        }
+
+                        confirmImageDialog(i);
+                    }); 
+                    fileInput.click();
+                });
+
+                pPicB.addEventListener('click', () => {
+                    new Request(`/backend/users/${username}/profile-picture`)
+                        .setContentType(null)
+                        .setLoaderParent(pPic)
+                        .onSuccess(() => {
+                            updateAllProfilePictures();
+                        })
+                        .onError((status, msg) => {
+                            fancyAlert('Oväntat fel', `Ett oväntat fel har inträffat. ${formatStatusCode(status)}`)
+                        })
+                        .DELETE();
+                });
+
+                pName.addEventListener('click', () => {
+                    let dialog = new FancyDialog('Byt visningsnamn');
+                    let inName = createElement('input', {type: 'text', value: (uname.toLowerCase() != username.toLowerCase() ? uname : ''), 'aria-label': 'Välj ett nytt visningsnamn'});
+                    let bName = createElement('span', {class: 'important-text'});
+                        bName.innerHTML = 'Lämna blankt för att använda ditt användarnamn.';
+                    let inSave = createElement('input', {type: 'submit', value: 'Spara'});
+
+                    dialog.content.appendChild(inName);
+                    dialog.content.appendChild(bName);
+                    dialog.buttons.appendChild(inSave);
+
+                    dialog.show();
+                });
+
+                pDel.addEventListener('click', () => {
+                    fancyConfirm('Helt säker?', 'Om du raderar kontot så raderas även alla inlägg med tillhörande bilder, alla dina kommentarer och alla gillningar. Dessutom blir användarnamnet direkt tillgängligt för nya användare.', () => {
+                        new Request('/backend/users')
+                            .setLoaderParent(document.body)
+                            .onSuccess(() => {
+                                window.location.reload();
+                            })
+                            .onError((status, msg) => {
+                                fancyAlert('Oväntat fel', 'Ett fel har inträffat, kontot har inte raderats.');
+                            })
+                            .DELETE();
+                    });
+                });
+
+                pCtx.appendChild(pPicA);
+                pCtx.appendChild(pPicB);
+                pCtx.appendChild(pName);
+                pCtx.appendChild(pDel);
+
+                userInfoArea.appendChild(pBtn);
+                userInfoArea.appendChild(pCtx);
+            }
+
+            function createFollowButton(following, followers, name) {
+                let btn = document.createElement('input');
+                btn.setAttribute('type', 'button');
+                btn.updateTitle = () => {
+                    if(following) {
+                        btn.setAttribute('value', `Sluta följa ${name}`);
+                        btn.setAttribute('type', 'submit');
+                        btn.setAttribute('class', 'follow-button');
+                    } else {
+                        btn.setAttribute('value', `Följ ${name}`);
+                        btn.setAttribute('type', 'button');
+                        btn.setAttribute('class', 'follow-button');
+                    }
+                }
+
+                btn.updateTitle();
+
+                let updateFollowerCount = (d) => {
+                    following = !following;
+                    pFollowers.innerHTML = d.followers;
+                    btn.updateTitle();
+                }
+
+                btn.addEventListener('click', () => {
+                    if(following) {
+                        new Request(`/backend/users/${username}/followers`)
+                            .setOverlayLoaderTarget(btn)
+                            .onSuccessJSON(updateFollowerCount)
+                            .onError((status, msg) => {
+                                fancyAlert('Ett oväntat fel inträffade', formatStatusCode(status));
+                            })
+                            .DELETE();
+                    } else {
+                        new Request(`/backend/users/${username}/followers`)
+                            .setOverlayLoaderTarget(btn)
+                            .onSuccessJSON(updateFollowerCount)
+                            .onError((status, msg) => {
+                                fancyAlert('Ett oväntat fel inträffade', formatStatusCode(status));
+                            })
+                            .POST();
+                    }
+                });
+
+                userInfoArea.appendChild(btn);
+            }
+
+            new Request(`/backend/users/${username}`)
+                .setLoaderParent('body')
+                .onSuccessJSON((d) => {
+                    pUsr.innerHTML = d.base_info.name;
+                    pFollowers.innerHTML = d.followers;
+                    pFollowing.innerHTML = d.following;
+
+                    if(!d.is_me) createFollowButton(d.followed_by_me, d.followers, d.base_info.name);
+                    else createContextMenu(d.base_info.name);
+                })
+                .GET();
+
+            getPosts(Date.now().toFixed(), username, 'div#postsArea');
+            getEvents('div#events div');
+            getMorePostsOnScroll(username, 'div#postsArea');
+        </script>
+        <script src="/static/scripts/search.js"></script>
+    </body>
+</html>

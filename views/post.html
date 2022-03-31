@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="sv">
+    <head>
+        <title>Kimmunity</title>
+        <meta name="description" content="Den nya sociala medieplatformen">
+        <meta name="author" content="Kim Lindgren">
+        <meta name="copyright" content="Copyright © 2022 Kim Lindgren">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#481E24">
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';">
+        <meta name="referrer" content="no-referrer">
+
+        <link rel="stylesheet" href="/static/fonts/fira/regular/fonts.css" defer>
+        <link rel="stylesheet" href="/static/fonts/fira/condensed/fonts.css" defer>
+        <link rel="stylesheet" href="/static/fonts/fira/mono/fonts.css" defer>
+        <link rel="stylesheet" href="/static/stylesheets/interface.css" defer>
+        <link rel="stylesheet" href="/static/stylesheets/fancydialog.css" defer>
+        <link rel="stylesheet" href="/static/stylesheets/styles.css">
+
+        <script src="/static/scripts/request.js"></script>
+        <script src="/static/scripts/fancydialog.js"></script>
+        <script src="/static/scripts/glob.js"></script>
+        <script src="/static/scripts/posts.js"></script>
+        <script src="/static/scripts/events.js"></script>
+
+        <link rel="icon" type="image/png" href="/static/images/favicon.png">
+
+        <style>
+            h1#kimmunity {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                display: block;
+                width: 260px;
+                height: 42px;
+                margin: 0px;
+                padding: 0px;
+                color: transparent;
+                background-image: url('/static/images/kimmunity_titlebar.svg');
+            }
+
+            main {
+                margin-top: 64px;
+                max-width: 600px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="titlebar">
+            <a href="/"><h1 id="kimmunity">Kimmunity</h1></a>
+            <div id="search-container">
+                <label for="search" class="sr-only">Sök användare</label>
+                <input type="text" id="search" autocomplete="off">
+                <div id="search-dropdown">
+                    <div id="search-results"></div>
+                </div>
+            </div>
+            <input type="checkbox" id="chk-bell">
+            <label id="bell" for="chk-bell"><span class="sr-only">Visa händelser</span></label>
+            <div id="events">
+                <a id="my-profile" href="/my-profile">Min profil</a>
+                <a id="logout" href="/logout">Logga ut</a>
+                <h2 id="events">Händelser</h2>
+                <div></div>
+            </div>
+        </div>
+        <main></main>
+        <script>
+            let m = window.location.href.match(/(?:https?\:\/\/)?[\w\.\_\-]+\/posts\/(\w{8}-\w{4}-\w{4}-\w{4}-\w{12})/);
+            let postID = m[1];
+            console.log(postID)
+
+            getPost(postID, 'main');
+            getEvents('div#events div');
+        </script>
+        <script src="/static/scripts/search.js"></script>
+    </body>
+</html>

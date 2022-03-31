@@ -1,0 +1,851 @@
+:root {
+    --fg: #EFF1E5;
+    --fg-alt1: #F6D78E;
+    --fg-alt2: #F3C969;
+    --fg-alt3: #F0BC42;
+    --bg1: #3B2B2B;
+    --bg2: #231A1A ;
+    --bg3: #0C0909;
+    --bg-alt1: #3F533C;
+    --bg-alt2: #2D3B2B;
+    --bg-alt3: #1B231A;
+    --bg-alt4: #813641;
+    --bg-alt5: #652A33;
+    --bg-alt6: #481E24;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+html, body {
+    min-height: 100%;
+    background-color: var(--bg2);
+    color: var(--fg);
+}
+
+body {
+    overflow-y: scroll;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+* {
+    scrollbar-color: var(--fg-alt2) var(--bg3);
+	scrollbar-width: thin;
+}
+
+*::-webkit-scrollbar {
+	width: 3px;
+	background-color: var(--bg3);
+}
+
+*::-webkit-scrollbar-thumb {
+	background: var(--fg-alt2);
+}
+
+body {
+    font-family: 'Fira Sans', sans-serif;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Fira Sans Condensed', sans-serif;
+}
+
+a {
+	color: var(--fg) !important;
+}
+
+h2#events {
+	text-align: center;
+	margin: 0px 0px 10px 0px;
+	font-size: 1.2em;
+	color: var(--fg-alt1);
+}
+
+main {
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+	padding: 0px 10px 0px 10px;
+	margin-bottom: 20px;
+}
+
+.rounded-block {
+    padding: 20px;
+    border-radius: 8px;
+    background-color: var(--bg1);
+	margin-bottom: 20px;
+    box-shadow:  0 2px 4px var(--bg3), 0 6px 12px var(--bg3);
+}
+
+.rounded-block h2 {
+	font-size: 1.1em;
+}
+
+.invis {
+    position: absolute;
+    height: 1px;
+    width: 1px;
+    top: -1000000px;
+}
+
+.important-text {
+	color: var(--fg-alt3);
+	font-weight: bold;
+}
+
+input[type="button"].context-menu {
+	height: 32px;
+	width: 32px;
+	background-image: url('../images/context-menu.svg');
+	box-shadow: none !important;
+}
+
+input[type="button"].context-menu,
+div.context-menu input[type="button"] {
+	background-color: transparent !important;
+	border: none !important;
+	transition: background-color 0.3s;
+}
+
+input[type="button"].context-menu:hover,
+input[type="button"].context-menu:focus {
+	background-color: var(--bg3) !important;
+}
+
+div.context-menu {
+	width: 200px;
+	border-radius: 4px;
+	background-color: var(--bg-alt3);
+	box-shadow: 0px 3px 6px var(--bg3);
+	margin-top: 20px;
+	height: 0px;
+	opacity: 0;
+	pointer-events: none;
+	transition: margin-top 0.3s, opacity 0.3s;
+}
+
+div.context-menu-container {
+	overflow: visible;
+}
+
+div.context-menu input[type="button"] {
+	width: 100%;
+	background-image: none;
+}
+
+div.context-menu input[type="button"]:hover,
+div.context-menu input[type="button"]:focus {
+	background-color: var(--bg-alt2) !important;
+}
+
+input[type="button"].context-menu:focus + div.context-menu,
+input[type="button"].context-menu:focus + div.context-menu-container div.context-menu,
+div.context-menu:hover {
+	margin-top: 0px;
+	opacity: 1;
+	pointer-events: auto;
+	height: auto;
+}
+
+div.profile-pic {
+	background-position: center center;
+	background-size: cover;
+	border-radius: 50%;
+	overflow: hidden;
+}
+
+div.post {
+	overflow: visible;
+}
+
+div.post.new {
+	animation: slide-in 0.6s;
+}
+
+div.post.deleted {
+	animation: explode 0.6s;
+	opacity: 0;
+}
+
+div.post div.head {
+	position: relative;
+	height: 48px;
+	width: 100%;
+	overflow: visible;
+}
+
+div.post div.head input[type="button"].context-menu {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}
+
+div.post div.head div.context-menu {
+	position: absolute;
+	top: 32px;
+	right: 0px;
+}
+
+div.post div.head div.profile-pic {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 48px;
+	width: 48px;
+}
+
+div.post div.head a.username,
+div.post div.head span.when {
+	display: block;
+	position: absolute;
+	left: 58px;
+	height: 24px;
+	width: calc(100% - 94px);
+	line-height: 24px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+a.username {
+	color: var(--fg-alt2) !important;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+div.post div.head a.username {
+	top: 0px;
+}
+
+div.post div.head span.when {
+	top: 24px;
+	font-size: 0.9em;
+	font-style: italic;
+}
+
+div.post span.content {
+	display: block;
+	width: 100%;
+	padding: 10px 0px 10px 0px;
+	font-size: 1.2em;
+}
+
+div.post span.content a {
+	color: var(--fg-alt1) !important;
+	text-decoration: none;
+}
+
+div.post a.post-link {
+	display: block;
+	width: 100%;
+	border-radius: 8px;
+	background-color: var(--bg2);
+	text-decoration: none;
+	margin-bottom: 5px;
+	overflow: hidden;
+}
+
+div.post a.post-link div.cover-image { 
+	width: 100%;
+	height: 150px;
+	background-position: center center;
+	background-size: cover;
+}
+
+div.post a.post-link div.link-summary {
+	padding: 10px;
+}
+
+div.post a.post-link div.link-summary span {
+	display: block;
+	width: 100%;
+}
+
+div.post a.post-link div.link-summary span:not(:last-child) {
+	margin-bottom: 10px;
+}
+
+div.post a.post-link div.link-summary span.domain {
+	font-style: italic;
+}
+
+div.post a.post-link div.link-summary span.title {
+	font-weight: bold;
+}
+
+div.post iframe {
+	width: 100%;
+	height: 315px;
+	border-radius: 8px;
+	margin-bottom: 5px;
+}
+
+div.post img.single-image {
+	width: 100%;
+	border-radius: 8px;
+}
+
+div.post div.multi-image {
+	position: relative;
+	padding: 32px 0px 0px 0px;
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+div.post div.multi-image img {
+	width: 100%;
+	border-radius: 0px 0px 8px 8px;
+}
+
+div.post div.multi-image div.image-controls {
+	position: absolute;
+	display: flex;
+	flex-direction: row;
+	top: 0px;
+	left: 0px;
+	height: 32px;
+	width: 100%;
+}
+
+div.post div.multi-image div {
+	line-height: 32px;
+	text-align: center;
+}
+
+div.post div.multi-image div.image-controls div.control {
+	width: 64px;
+	background-color: var(--bg-alt4);
+	transition: color 0.2s;
+}
+
+div.post div.multi-image div.image-controls div.control:first-child::before {
+	content: '««'
+}
+
+div.post div.multi-image div.image-controls div.control:last-child::before {
+	content: '»»'
+}
+
+div.post div.multi-image div.image-controls div.control:not([disabled=disabled]):hover {
+	color: var(--fg-alt1);
+	cursor: pointer;
+}
+
+div.post div.multi-image div.image-controls div.control[disabled=disabled] {
+	background-color: var(--bg-alt5);
+	color: var(--bg-alt6);
+}
+
+div.post div.multi-image div.image-controls div.count {
+	flex: 1;
+	background-color: var(--bg-alt5);
+}
+
+div.post label.like {
+	display: inline-block;
+	flex: none;
+	top: 0px;
+	left: 0px;
+	display: block;
+	font-size: 1.2em;
+	font-weight: bold;
+	font-family: 'Fira Mono', monospace;
+	height: 32px;
+	border-radius: 8px;
+	transition: background-color 0.2s;
+}
+
+div.post label.like span.count {
+	display: inline-block;
+	height: 32px;
+	line-height: 32px;
+	text-align: right;
+	padding: 0px 10px 0px 42px;
+	background-image: url('../images/heart-gray.svg');
+	background-position: center left;
+	background-repeat: no-repeat;
+	position: relative;
+}
+
+div.post label.like input[type=checkbox] {
+    position: fixed;
+    width: 1px;
+    height: 1px;
+    top: -100000px !important;
+    left: -100000px !important;
+}
+
+div.post label.like input[type=checkbox]:checked ~ span.count {
+	background-image: url('../images/heart-red.svg');
+}
+
+div.post label.like input[type=checkbox]:checked ~ span.count::before {
+	content: '';
+	display: block;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 32px;
+	width: 32px;
+	background-image: url('../images/heart-red.svg');
+	animation: flash 0.4s;
+}
+
+div.post label.like input[type=checkbox]:checked ~ span.heart span.heart {
+    animation: flash 0.5s;
+}
+
+div.post div.write-comment {
+	position: relative;
+	margin-top: 10px;
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 10px;
+}
+
+div.post div.write-comment input[type=text] {
+	flex: 1;
+	margin-right: 10px;
+}
+
+div.post div.write-comment input[type=button] {
+	flex: none;
+}
+
+div.post div.comments {
+	overflow: hidden;
+}
+
+div.post div.comments div.container {
+	max-height: 400px;
+	/*width: calc(100% + 400px);*/
+	/*padding: 0px 400px 0px 0px;*/
+	margin: 0px;
+	overflow-y: scroll;
+	scrollbar-width: none;
+}
+
+div.container::-webkit-scrollbar {
+	display: none;
+  }
+
+div.post div.comments div.container div.comment {
+	position: relative;
+	padding: 10px;
+	display: flex;
+	flex-direction: row;
+	border-radius: 8px;
+}
+
+div.post div.comments div.container div.comment.mine {
+	padding-right: 42px;
+}
+
+div.post div.comments div.container div.comment.mine input[type="button"].context-menu {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+
+div.post div.comments div.container div.comment.mine div.context-menu {
+	position: absolute;
+	top: 42px;
+	right: 10px;
+}
+
+div.post div.comments div.container div.comment:not(:last-child) {
+	margin-bottom: 10px;
+}
+
+div.post div.comments div.container div.comment:nth-child(even) {
+	background-color: var(--bg2);
+}
+
+div.post div.comments div.container div.comment.new {
+	animation: slide-in 0.6s;
+}
+
+div.post div.comments div.container div.comment.deleted {
+	animation: explode 0.6s;
+	opacity: 0;
+}
+
+div.post div.comments div.container div.comment div.profile-pic {
+	flex: none;
+	height: 32px;
+	width: 32px;
+	margin-right: 10px;
+}
+
+div.post div.comments div.container div.comment div.content {
+	flex: 1;
+}
+
+div.post div.comments div.container div.comment div.content span.when {
+	font-size: 0.8em;
+	font-style: italic;
+	margin-bottom: 5px;
+}
+
+div.loader-shade {
+    position: absolute;
+    flex-direction: row;
+    vertical-align: middle;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+    animation: fade-in 0.2s;
+}
+
+div.cube-loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+	height: 16px;
+	width: 16px;
+    transform: translate(-50%, -50%);
+	background-color: rgba(0, 0, 0, 0.05);
+}
+
+div.cube-loader::before {
+	content: '';
+	position: absolute;
+	height: 16px;
+	width: 16px;
+	animation: cube-roll 3s infinite linear;
+	box-shadow: 0px 0px 4px lightgray;
+}
+
+div#titlebar {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	z-index: 200;
+	width: 100%;
+	height: 44px;
+	background-color: var(--bg-alt6);
+	border-style: solid;
+	border-width: 0px 0px 2px 0px;
+	border-color: var(--bg-alt5);
+}
+
+div#titlebar h1#kimmunity {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	display: block;
+	width: 260px;
+	height: 42px;
+	margin: 0px;
+	padding: 0px;
+	color: transparent;
+	background-image: url('/static/images/kimmunity_titlebar.svg');
+}
+
+@media screen and (max-width: 1100px) {
+	div#titlebar h1#kimmunity {
+		background-image: url('/static/images/kimmunity_titlebar_smol.svg');
+		background-size: 42px 42px;
+		background-repeat: no-repeat;
+		background-position: center left;
+	}
+}
+
+div#titlebar div#search-container {
+	position: relative;
+	max-width: 600px;
+	padding: 2px 10px 0px 10px;
+	margin: 0px auto 0px auto;
+}
+
+div#titlebar div#search-container input[type="text"]#search {
+	height: 38px;
+	width: 100%;
+	padding-left: 40px;
+	font-size: 1.1em;
+	font-weight: bold;
+	background-position: center left 4px;
+	background-repeat: no-repeat;
+	background-image: url('../images/search.svg');
+	border: none !important;
+	background-color: var(--bg-alt4);
+}
+
+div#titlebar div#search-container div#search-dropdown {
+	position: absolute;
+	z-index: -1;
+	height: 400px;
+	top: -410px;
+	opacity: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 100%;
+	padding: 54px 10px 10px 10px;
+	border-radius: 0px 0px 8px 8px;
+	background-color: var(--bg-alt4);
+	box-shadow:  0 3px 6px var(--bg3), 0 7px 14px var(--bg3);
+	transition: top 0.2s, opacity 0.2s;
+}
+
+div#titlebar div#search-container input[type="text"]#search:focus ~ div#search-dropdown,
+div#titlebar div#search-container div#search-dropdown:hover {
+	top: 0px;
+	opacity: 1;
+}
+
+div#titlebar div#search-container div#search-dropdown div#search-results {
+	height: 100%;
+	width: 100%;
+	overflow-y: scroll;
+}
+
+div#titlebar div#search-container div#search-dropdown div#search-results a.search-hit {
+	position: relative;
+	display: block;
+	height: 42px;
+	line-height: 42px;
+	width: 100%;
+	padding: 0px 10px 0px 47px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	text-decoration: none;
+	color: var(--fg-alt1) !important;
+	border-radius: 6px;
+}
+
+div#titlebar div#search-container div#search-dropdown div#search-results a.search-hit:nth-child(even) {
+	background-color: var(--bg-alt6);
+}
+
+div#titlebar div#search-container div#search-dropdown div#search-results a.search-hit[focused] {
+	background-color: var(--bg-alt5);
+}
+
+div#titlebar div#search-container div#search-dropdown div#search-results a.search-hit div.profile-pic {
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	height: 32px;
+	width: 32px;
+}
+
+div#events {
+	position: fixed;
+	top: 64px;
+	right: 20px;
+	width: calc(50% - 330px);
+}
+
+div#events div.event {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	min-height: 32px;
+	padding: 0px 0px 0px 42px;
+	margin-bottom: 10px;
+}
+
+div#events div.event div.profile-pic {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 32px;
+	height: 32px;
+	box-shadow: 0px 1px 4px var(--bg3);
+}
+
+div#events div.event span.event-text {
+	font-size: 0.8em;
+	margin-bottom: 5px;
+}
+
+div#events div.event span.when {
+	font-size: 0.7em;
+	display: block;
+	width: 100%;
+	text-align: right;
+	font-style: italic;
+}
+
+input#chk-bell {
+	position: fixed;
+	top: -10000px;
+}
+
+@media screen and (max-width: 1160px) {
+	label#bell {
+		display: block;
+		position: absolute;
+		top: 0px;
+		right: 0px;
+		height: 42px;
+		width: 42px;
+		background-image: url('../images/bell.svg');
+		transition: background-color 0.1s;
+	}
+
+	input#chk-bell:checked ~ label#bell {
+		background-color: var(--bg-alt4);
+	}
+
+	div#events {
+		width: 100%;
+		height: 100%;
+		top: -110%;
+		left: 0px;
+		padding: 54px 10px 10px 10px;
+		background-color: var(--bg-alt6);
+		z-index: -2;
+		box-shadow: 0px 3px 6px var(--bg3), 0px 6px 12px var(--bg3);
+		opacity: 0;
+		transition: top 0.1s;
+	}
+
+	input#chk-bell:checked ~ div#events {
+		opacity: 1;
+		top: 0px;
+	}
+}
+
+a#my-profile, a#logout {
+	position: relative;
+	display: block;
+	width: 100%;
+	height: 32px;
+	line-height: 32px;
+	padding: 0px 0px 0px 42px;
+	color: var(--fg-alt1) !important;
+	font-weight: bold;
+	text-decoration: none;
+	margin-bottom: 10px;
+}
+
+a#my-profile::before, a#logout::before {
+	content: '';
+	display: block;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 32px;
+	width: 32px;
+	background-position: center center;
+	background-size: cover;
+}
+
+a#my-profile::before {
+	background-image: url('/my-profile-picture');
+	border-radius: 16px;
+	box-shadow: 0px 0px 2px var(--bg3);
+}
+
+a#logout::before {
+	background-image: url('../images/logout.svg');
+}
+
+@media screen and (min-width: 1159.9px) {	
+	a#my-profile, a#logout {
+		position: fixed;
+		left: 20px;
+		width: 200px;
+	}
+
+	a#my-profile {
+		top: 64px;
+	}
+
+	a#logout {
+		top: 106px;
+	}
+}
+
+@media screen and (max-width: 670px) {
+	div#titlebar div#search-container {
+		position: absolute;
+		left: 42px;
+		right: 42px;
+	}
+}
+
+div.pic-container {
+	position: relative;
+	overflow: hidden;
+	border-radius: 50%;
+}
+
+@keyframes flash {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    } 100% {
+        opacity: 0;
+        transform: scale(2.5);
+    }
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    } 100% {
+        opacity: 1;
+    }
+}
+
+@keyframes slide-in {
+	0% {
+		transform: translateX(-100%);
+		opacity: 0;
+	} 100% {
+		transform: translateX(0%);
+		opacity: 1;
+	}
+}
+
+@keyframes explode {
+	0% {
+		transform: scale(1);
+		opacity: 1;
+		filter: blur(0px);
+	} 100% {
+		transform: scale(3);
+		opacity: 0;
+		filter: blur(4px);
+	}
+}
+
+@keyframes cube-roll {
+	0% {
+		background-color: #9D0000;
+		transform-origin: bottom left;
+		transform: translate(0px, -16px) rotate(0deg);
+	} 25% {
+		transform-origin: bottom left;
+		transform: translate(0px, -16px) rotate(-180deg);
+	} 26% {
+		transform-origin: top left;
+		transform: translate(0px, 16px) rotate(-180deg);
+	} 50% {
+		background-color: #5B8266;
+		transform-origin: top left;
+		transform: translate(0px, 16px) rotate(-360deg);
+	} 51% {
+		transform-origin: top right;
+		transform: translate(0px, 16px) rotate(-360deg);
+	} 75% {
+		transform-origin: top right;
+		transform: translate(0px, 16px) rotate(-540deg);
+	} 76% {
+		transform-origin: bottom right;
+		transform: translate(0px, -16px) rotate(-540deg);
+	} 100% {
+		background-color: #9D0000;
+		transform-origin: bottom right;
+		transform: translate(0px, -16px) rotate(-720deg);
+	}
+}

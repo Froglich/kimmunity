@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="sv">
+    <head>
+        <title>Kimmunity - Logga in</title>
+        <meta name="description" content="Den nya sociala medieplatformen">
+        <meta name="author" content="Kim Lindgren">
+        <meta name="copyright" content="Copyright © 2022 Kim Lindgren">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#481E24">
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';">
+        <meta name="referrer" content="no-referrer">
+
+        <link rel="stylesheet" href="/static/fonts/fira/regular/fonts.css" defer>
+        <link rel="stylesheet" href="/static/fonts/fira/condensed/fonts.css" defer>
+        <link rel="stylesheet" href="/static/stylesheets/interface.css" defer>
+        <link rel="stylesheet" href="/static/stylesheets/fancydialog.css" defer>
+        <link rel="stylesheet" href="/static/stylesheets/styles.css">
+
+        <script src="/static/scripts/request.js"></script>
+        <script src="/static/scripts/glob.js"></script>
+        <script src="/static/scripts/fancydialog.js"></script>
+
+        <link rel="icon" type="image/png" href="/static/images/favicon.png">
+        
+        <style>
+            div#kimmunity-block {
+                font-size: 1.6em;
+                padding: 20px;
+            }
+
+            div#session {
+                margin-left: 20px;
+                position: relative;
+                overflow: hidden;
+                min-height: 500px;
+            }
+
+            div#session div#tabs {
+                display: flex;
+                flex-direction: row;
+                top: 0px;
+                left: 0px;
+                width: 100%;
+                height: 65px;
+                border-style: solid;
+                border-width: 0px 0px 1px 0px;
+                border-color: var(--bg2);
+            }
+
+            div#session div#tabs div.tab {
+                position: relative;
+                flex: 1;
+                font-family: 'Fira Sans Condensed', sans-serif;
+                font-weight: bold;
+                font-size: 1.1em;
+                text-align: center;
+                line-height: 64px;
+                overflow: hidden;
+            }
+
+            div#session div#tabs div.tab:first-of-type {
+                border-radius: 8px 0px 0px 0px;
+            }
+
+            div#session div#tabs div.tab:last-of-type {
+                border-radius: 0px 8px 0px 0px;
+            }
+
+            div#session div#tabs div.tab label {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                transition: 0.4s;
+                display: block;
+                height: 100%;
+                width: 100%;
+            }
+
+            div#session div#tabs div.tab input[type="radio"]:checked ~ label {
+                background-color: var(--bg2);
+            }
+            
+            div#session div#content {
+                display: flex;
+                flex-direction: row;;
+                padding-top: 20px;
+                position: absolute;
+                top: 64px;
+                height: calc(100% - 65px);
+                width: calc(200% - 40px);
+                left: 0%;
+                transition: 0.4s;
+            }
+
+            div#session div#content form.page {
+                display: block;
+                padding: 20px 0px 0px 20px;
+                height: 100%;
+                flex: 1;
+            }
+
+            div#session div#content form.page input:not([type="checkbox"]) {
+                margin-bottom: 10px;
+                width: 100%;
+            }
+
+            h1#kimmunity {
+                color: transparent;
+                display: block;
+                height: 50px;
+                margin: 0px 0px 20px 0px;
+                background-image: url('/static/images/kimmunity.png');
+                background-size: 380px 50px;
+                background-repeat: no-repeat;
+                background-position: center left;
+            }
+
+            main {
+                max-width: 1200px;
+            }
+
+            @media screen and (min-width: 960px) {
+                main {
+                    display: flex;
+                    margin-top: 60px;
+                    flex-direction: row;
+                    vertical-align: top;
+                }
+
+                div#kimmunity-block {
+                    flex: 3;
+                    margin-right: 20px;
+                    padding-top: 60px;
+                }
+
+                div#session {
+                    flex: 2;
+                }
+            }
+
+            @media screen and (max-width: 959px) {
+                main {
+                    margin-top: 20px;
+                }
+
+                div#session {
+                    flex: 2;
+                    margin-left: 0px;
+                }
+            }
+
+            @media screen and (max-width: 515px) {
+                h1#kimmunity {
+                    background-size: contain;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <div id="kimmunity-block">
+                <h1 id="kimmunity">Kimmunity</h1>
+                <p>Håll kontakten med dina vänner och möt nya på Kimmunity, den nya sociala medieplatformen helt fri från stalkerfasoner*.</p>
+                <p style="font-size: 0.5em; font-style: italic;">* Trots att Kimmunity absolut inte förespråkar stalkerfasoner kan vi inte
+                garantera att alla användare är fria från sådanna fasoner. Tänk därför på vad du lägger upp!</p>
+            </div>
+            <div class="rounded-block" id="session">
+                <div id="tabs">
+                    <div class="tab">
+                        <input class="invis" type="radio" name="action" id="radioLogin" checked>
+                        <label for="radioLogin">Logga in</label>
+                    </div>
+                    <div class="tab">
+                        <input class="invis" type="radio" name="action" id="radioCreateAccount">
+                        <label for="radioCreateAccount">Skapa konto</label>
+                    </div>
+                </div>
+                <div id="content">
+                    <form class="page" action="javascript:logIn()">
+                        <label for="login"><b>Användarnamn eller E-postadress</b></label>
+                        <input type="text" id="login">
+                        <label for="password"><b>Lösenord</b></label>
+                        <input type="password" id="password" style="margin-bottom: 0px;">
+                        <a href="/reset-password" style="display: block; font-style: italic; text-align: right; margin-bottom: 10px;">Glömt bort ditt lösenord?</a>
+                        <label class="chkwlbl">
+                            <input type="checkbox" id="remember">
+                            <span>Kom ihåg mig i den här webbläsaren så att jag slipper logga in nästa gång.</span>
+                        </label>
+                        <label for="btnLogin" class="sr-only">Tryck här för att logga in</label>
+                        <input type="submit" value="Logga in" id="btnLogIn">
+                        <p style="text-align: center;" class="important-text">Vänligen notera att om du väljer att bli ihågkommen så sparas
+                        en kaka i din webbläsare i upp till ett år, den är enbart till för att hålla dig inloggad.</p>
+                    </form>
+                    <form class="page" action="javascript:signUp()">
+                        <label for="registerUsername"><b>Användarnamn*</b></label>
+                        <input type="text" id="registerUsername">
+                        <label for="email"><b>E-postadress*</b></label>
+                        <input type="email" id="email">
+                        <label for="displayName"><b>Namn/Smeknamn (visas istället för användarnamn)</b></label>
+                        <input type="text" id="displayName">
+                        <label class="chkwlbl">
+                            <input type="checkbox" id="acceptPolicy">
+                            <span>Jag godkänner <a href="/privacy-policy">kimmunitys personuppgiftspolicy.</a></span>
+                        </label>
+                        <label for="btnCreateAccount" class="sr-only">Tryck här för att skapa ditt konto</label>
+                        <input type="submit" value="Skapa ett konto" id="btnCreateAccount">
+                    </form>
+                </div>
+            </div>
+        </main>
+        <script>
+            let content = document.querySelector('#content');
+            let radioLogin = document.querySelector('#radioLogin');
+            let radioCreateAccount = document.querySelector('#radioCreateAccount');
+            let update = () => {
+                if(radioLogin.checked) {
+                    content.style.left = 'calc(0%)';
+                } else {
+                    content.style.left = 'calc(-100% + 20px)';
+                }
+            };
+
+            update(); //for when the user uses the back button
+
+            radioLogin.addEventListener('change', update);
+            radioCreateAccount.addEventListener('change', update);
+
+            let pUsername = /^[a-z0-9\_\-]{3,}$/;
+            let pEmail = /^[^@]+@[\S]+\.[a-z\.]+/;
+            let registerUsername = document.querySelector('#registerUsername');
+            let email = document.querySelector('#email');
+            let displayName = document.querySelector('#displayName')
+            let acceptPolicy = document.querySelector('#acceptPolicy');
+            function signUp() {
+                let usernameValue = registerUsername.value.trim();
+                let emailValue = email.value.trim();
+                let nameValue = displayName.value.trim();
+                
+                let badUsernameDialog = () => {
+                    fancyAlert('Ogiltigt användarnamn', 'Användarnamn måste bestå av minst 3 tecken och får endast innehålla bokstäver, siffror, bindestreck och understreck.');
+                }
+
+                let badEmailDialog = () => {
+                    fancyAlert('Ogiltig e-postadress', 'Din e-postadress ser inte ut att vara giltig. En giltig unik e-postadress krävs för att minimera antalet spamkonton.');
+                }
+
+                if(!acceptPolicy.checked) {
+                    fancyAlert('Kan inte fortsätta', 'Du måste acceptera personuppgiftspolicyn för att skapa ett konto.');
+                    return
+                }
+
+                if(!usernameValue.match(pUsername)) {
+                    badUsernameDialog();
+                    return
+                }
+
+                if(!emailValue.match(pEmail)) {
+                    badEmailDialog();
+                    return
+                }
+
+                new Request('/backend/users')
+                    .setLoaderParent('div#session')
+                    .onSuccess(() => {
+                        registerUsername.value = '';
+                        email.value = '';
+                        fancyAlert('Registreringen lyckades!', `Ett e-postmeddelande har skickats till '${emailValue}' med en länk att följa för att välja lösenord och aktivera ditt konto.`);
+                    })
+                    .onError((status, msg) => {
+                        switch(msg) {
+                            case 'e-mail':
+                                badEmailDialog();
+                                break;
+                            case 'bad username':
+                                badUsernameDialog();
+                                break;
+                            case 'e-mail or name':
+                                fancyAlert('Redan registrerat', 'Användarnamnet eller e-postadressen används redan av ett annat konto.');
+                                break;
+                            case 'notification':
+                                fancyAlert('Något gick snett', 'Bekräftelsemailet kunde inte skickas till den angivna e-postadressen, var väldig försök igen senare.');
+                                break;
+                            default:
+                                fancyAlert('Oväntat fel', 'Något oväntat har gått snett. Vänligen försök igen senare eller meddela webbsidans administratör om problemet kvarstår.');
+                        }
+                    })
+                    .POST({username: usernameValue, email: emailValue, name: nameValue});
+            }
+
+            let login = document.querySelector('#login');
+            let password = document.querySelector('#password');
+            let remember = document.querySelector('#remember');
+            function logIn() {
+                let loginValue = login.value.trim();
+                let passwordValue = password.value;
+
+                if(loginValue == "") {
+                    fancyAlert('Användarnamn saknas', 'Du måste ange ditt användarnamn eller den e-postadress som hör till ditt konto.');
+                    return
+                }
+
+                if(passwordValue == "") {
+                    fancyAlert('Blankt lösenord', 'Lösenordet kan inte lämnas blankt.');
+                    return
+                }
+
+                new Request('/backend/login')
+                    .setLoaderParent('div#session')
+                    .onSuccess(() => {
+                        window.location.href = '/';
+                    })
+                    .onError((status, msg) => {
+                        switch(msg) {
+                            case 'invalid login':
+                                fancyAlert('Verkar inte stämma', 'Användarnamnet/e-postadressen eller lösenordet stämmer inte.');
+                                break;
+                            default:
+                                fancyAlert('Oväntat fel', 'Något oväntat har gått snett. Vänligen försök igen senare eller meddela webbsidans administratör om problemet kvarstår.');
+                        }
+                    })
+                    .POST({login: loginValue, password: passwordValue, remember: (remember.checked ? 'true' : 'false')});
+            }
+        </script>
+    </body>
+</html>
