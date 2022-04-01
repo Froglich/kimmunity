@@ -1,0 +1,13 @@
+[Unit]
+Description = Kimmunity
+After = network.target
+
+[Service]
+Type = simple
+User = kimmunity
+WorkingDirectory = /opt/kimmunity
+ExecStart = /opt/kimmunity/kimmunity
+Restart = on-failure
+
+[Install]
+WantedBy = multi-user.target
