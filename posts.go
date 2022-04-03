@@ -119,9 +119,9 @@ func addNewPost(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if len(images) > 0 {
-		fmt.Fprintf(w, `{"post_id": "%s", "post_by_username": "%s", "post_by_name": "%s", "content": "%s", "posted": %d, "images": ["%s"], "likes": 0, "liked_by_me": false, "comments": [], "my_post": true}`, postID, u.Username, u.getName(), content, posted, strings.Join(images, `","`))
+		fmt.Fprintf(w, `{"post_id": "%s", "post_by_username": "%s", "post_by_name": "%s", "content": "%s", "posted": %d, "images": ["%s"], "likes": 0, "liked_by_me": false, "comments": [], "my_post": true}`, postID, u.Username, u.getName(), strings.Replace(content, "\n", "\\n", -1), posted, strings.Join(images, `","`))
 	} else {
-		fmt.Fprintf(w, `{"post_id": "%s", "post_by_username": "%s", "post_by_name": "%s", "content": "%s", "posted": %d, "images": [], "likes": 0, "liked_by_me": false, "comments": [], "my_post": true}`, postID, u.Username, u.getName(), content, posted)
+		fmt.Fprintf(w, `{"post_id": "%s", "post_by_username": "%s", "post_by_name": "%s", "content": "%s", "posted": %d, "images": [], "likes": 0, "liked_by_me": false, "comments": [], "my_post": true}`, postID, u.Username, u.getName(), strings.Replace(content, "\n", "\\n", -1), posted)
 	}
 
 }
@@ -246,7 +246,7 @@ func commentOnPost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Fprintf(w, `{"comment_id": %d, "comment_by_username": "%s", "comment_by_name": "%s", "content": "%s", "my_comment": true, "timestamp": %d}`, id, u.Username, u.getName(), comment, tstamp)
+	fmt.Fprintf(w, `{"comment_id": %d, "comment_by_username": "%s", "comment_by_name": "%s", "content": "%s", "my_comment": true, "timestamp": %d}`, id, u.Username, u.getName(), strings.Replace(comment, "\n", "\\n", -1), tstamp)
 }
 
 func deleteComment(w http.ResponseWriter, r *http.Request) {
