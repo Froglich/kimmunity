@@ -99,6 +99,8 @@ func main() {
 	r.HandleFunc("/backend/posts/{post_id:\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}}/comments/{id:[0-9]+}", deleteComment).Methods("DELETE")
 	r.HandleFunc("/backend/posts/{post_id:\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}}/likes", likePost).Methods("POST")
 	r.HandleFunc("/backend/posts/{post_id:\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}}/likes", unLikePost).Methods("DELETE")
+	r.HandleFunc("/backend/user/name", setDisplayName).Methods("POST")
+	r.HandleFunc("/backend/user/name", delDisplayName).Methods("DELETE")
 	r.HandleFunc("/backend/user/password", setPassword).Methods("POST")
 	r.HandleFunc("/backend/user/reset-password", resetPassword).Methods("POST")
 

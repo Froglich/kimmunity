@@ -267,14 +267,36 @@
 
                 pName.addEventListener('click', () => {
                     let dialog = new FancyDialog('Byt visningsnamn');
+                    let emName = document.createElement('em');
+                        emName.innerHTML = 'Visningsnamn får innehålla små och stora bokstäver, siffror, och mellanrum. Namnet får inte börja eller sluta med ett mellanrum och får inte heller innehålla flera mellanrum efter varandra.';
                     let inName = createElement('input', {type: 'text', value: (uname.toLowerCase() != username.toLowerCase() ? uname : ''), 'aria-label': 'Välj ett nytt visningsnamn'});
                     let bName = createElement('span', {class: 'important-text'});
                         bName.innerHTML = 'Lämna blankt för att använda ditt användarnamn.';
                     let inSave = createElement('input', {type: 'submit', value: 'Spara'});
 
+                    dialog.content.appendChild(emName);
                     dialog.content.appendChild(inName);
                     dialog.content.appendChild(bName);
                     dialog.buttons.appendChild(inSave);
+
+                    inSave.addEventListener('click', () => {
+                        let nn = inName.value.trim();
+
+                        let req = new Request('/backend/user/name')
+                            .onSuccess(() => {
+                                window.location.reload();
+                            })
+                            .onError((status, _msg) => {
+                                fancyAlert('Oväntat fel', `Ett oväntat fel har inträffat: ${formatStatusCode(status)}`);
+                            });
+
+                        if(nn == '')
+                            req.DELETE();
+                        else if(nn.match(/^(?:[A-Za-z0-9ÅåÄäÖö]+ ?)*[A-Za-z0-9ÅåÄäÖö]$/))
+                            req.POST({name: nn});
+                        else
+                            fancyAlert('Otillåtet namn', 'Namnet uppfyller inte kraven. Visningsnamn får innehålla små och stora bokstäver, siffror, och mellanrum. Namnet får inte börja eller sluta med ett mellanrum och får inte heller innehålla flera mellanrum efter varandra.');
+                    });
 
                     dialog.show();
                 });

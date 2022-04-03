@@ -72,6 +72,17 @@ func (u *user) getName() string {
 	return u.Username
 }
 
+func (u *user) setName(db *sql.DB, name string) error {
+	var err error
+	if name == "" {
+		_, err = db.Exec("UPDATE users SET name = NULL WHERE username = $1", u.Username)
+	} else {
+		_, err = db.Exec("UPDATE users SET name = $1 WHERE username = $2", name, u.Username)
+	}
+
+	return err
+}
+
 func getSessionIdentifier(r *http.Request) string {
 	cookies := r.Cookies()
 
@@ -130,6 +141,47 @@ func getCurrentUser(db *sql.DB, r *http.Request) *user {
 	}
 
 	return nil
+}
+
+func setDisplayName(w http.ResponseWriter, r *http.Request) {
+	db := dbConnection()
+	defer db.Close()
+
+	u := getCurrentUser(db, r)
+	if u == nil {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
+	nn := r.FormValue("name")
+	pName := regexp.MustCompile(`^(?:[A-Za-z0-9ÅåÄäÖö]+ ?)*[A-Za-z0-9ÅåÄäÖö]$`)
+	if !pName.MatchString(nn) {
+		w.WriteHeader(http.StatusNotAcceptable)
+		return
+	}
+
+	err := u.setName(db, nn)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		log.Println(err)
+	}
+}
+
+func delDisplayName(w http.ResponseWriter, r *http.Request) {
+	db := dbConnection()
+	defer db.Close()
+
+	u := getCurrentUser(db, r)
+	if u == nil {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
+	err := u.setName(db, "")
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		log.Println(err)
+	}
 }
 
 func getUserProfilePicture(w http.ResponseWriter, r *http.Request) {
