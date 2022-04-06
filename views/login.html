@@ -2,15 +2,20 @@
 <html lang="sv">
     <head>
         <title>Kimmunity - Logga in</title>
-        <meta name="description" content="Den nya sociala medieplatformen">
+        <meta name="description" content="Håll kontakten med dina vänner och möt nya på Kimmunity, den lilla lokalproducerade sociala medieplatformen.">
         <meta name="author" content="Kim Lindgren">
         <meta name="copyright" content="Copyright © 2022 Kim Lindgren">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#481E24">
+        <meta name="theme-color" content="#AE4751">
         <meta http-equiv="Content-type" content="text/html; charset=utf-8">
         <meta charset="UTF-8">
         <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';">
         <meta name="referrer" content="no-referrer">
+
+        <meta property="og:image" content="https://www.kimmunity.se/static/images/kimmunity_cover.png">
+        <meta property="og:description" content="Håll kontakten med dina vänner och möt nya på Kimmunity, den lilla lokalproducerade sociala medieplatformen.">
+        <meta property="twitter:image" content="https://www.kimmunity.se/static/images/kimmunity_cover.png">
+        <meta property="twitter:description" content="Håll kontakten med dina vänner och möt nya på Kimmunity, den lilla lokalproducerade sociala medieplatformen.">
 
         <link rel="stylesheet" href="/static/fonts/fira/regular/fonts.css" defer>
         <link rel="stylesheet" href="/static/fonts/fira/condensed/fonts.css" defer>
@@ -121,6 +126,17 @@
                 max-width: 1200px;
             }
 
+            a.github {
+                display: inline-block;
+                background-image: url('/static/images/GitHub-Mark.svg');
+                background-size: 32px 32px;
+                background-position: center left;
+                background-repeat: no-repeat;
+                padding: 0px 0px 0px 42px;
+                height: 32px;
+                line-height: 32px;
+            }
+
             @media screen and (min-width: 960px) {
                 main {
                     display: flex;
@@ -208,6 +224,9 @@
                 </div>
             </div>
         </main>
+        <div style="text-align: center">
+            <a href="https://github.com/Froglich/kimmunity" class="github">Kolla in källkoden på GitHub!</a>
+        </div>
         <script>
             let content = document.querySelector('#content');
             let radioLogin = document.querySelector('#radioLogin');
