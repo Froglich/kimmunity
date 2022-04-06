@@ -12,3 +12,4 @@ The demonstration version of this site runs on a Raspberry Pi, so I have tried t
 * Allow user to crop profile pictures in the browser.
 * Rescale pictures in the browser when uploading photos.
 * Nicer welcome and reset password e-mails.
+* Error messages really need to be clearer.
