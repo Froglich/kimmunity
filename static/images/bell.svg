@@ -7,7 +7,7 @@
    viewBox="0 0 11.1125 11.1125"
    version="1.1"
    id="svg5"
-   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04, custom)"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
    sodipodi:docname="bell.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -27,12 +27,12 @@
      showguides="true"
      inkscape:guide-bbox="true"
      inkscape:zoom="8.0000001"
-     inkscape:cx="7.0624999"
-     inkscape:cy="33.6875"
+     inkscape:cx="6.9999999"
+     inkscape:cy="33.75"
      inkscape:window-width="1920"
-     inkscape:window-height="1022"
+     inkscape:window-height="1018"
      inkscape:window-x="0"
-     inkscape:window-y="30"
+     inkscape:window-y="32"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1" />
   <defs
@@ -43,12 +43,12 @@
      id="layer1">
     <path
        id="path2314"
-       style="fill:#f6d78c;fill-opacity:1;stroke:none;stroke-width:2.79915;stroke-linecap:round"
+       style="fill:#edd096;fill-opacity:1;stroke:none;stroke-width:2.79915;stroke-linecap:round"
        d="m 28,29 a 3,3 0 0 0 -2.826172,2 h 5.654297 A 3,3 0 0 0 28,29 Z m -2.998047,2.96875 A 3,3 0 0 0 25,32 a 3,3 0 0 0 3,3 3,3 0 0 0 3,-3 3,3 0 0 0 0,-0.03125 z"
        transform="scale(0.26458333)" />
     <path
        id="path948"
-       style="fill:#f6d78c;stroke:none;stroke-width:3.93464;stroke-linecap:round"
+       style="fill:#edd096;stroke:none;stroke-width:3.93464;stroke-linecap:round;fill-opacity:1"
        d="M 21,7 A 9.9999996,9.9999996 0 0 0 11,17 v 7 H 31 V 17 A 9.9999996,9.9999996 0 0 0 21,7 Z M 11,25 v 2 l -4,1 v 3 h 28 v -3 l -4,-1 v -2 z"
        transform="scale(0.26458333)" />
   </g>

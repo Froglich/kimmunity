@@ -1,4 +1,4 @@
-:root {
+/*:root {
     --fg: #EFF1E5;
     --fg-alt1: #F6D78E;
     --fg-alt2: #F3C969;
@@ -12,6 +12,22 @@
     --bg-alt4: #813641;
     --bg-alt5: #652A33;
     --bg-alt6: #481E24;
+}*/
+
+:root {
+    --fg: #ECEFF4;
+    --fg-alt1: #EDD096;
+    --fg-alt2: #EAC885;
+    --fg-alt3: #E7C173;
+    --bg1: #333B47;
+    --bg2: #2B313B;
+    --bg3: #22272F;
+    --bg-alt1: #6E9051;
+    --bg-alt2: #648349;
+    --bg-alt3: #5A7642;
+    --bg-alt4: #BE6069;
+    --bg-alt5: #B8515B;
+    --bg-alt6: #AE4751;
 }
 
 html {

@@ -28,9 +28,9 @@
      inkscape:cx="8.923475"
      inkscape:cy="16.234274"
      inkscape:window-width="1920"
-     inkscape:window-height="1019"
+     inkscape:window-height="1018"
      inkscape:window-x="0"
-     inkscape:window-y="25"
+     inkscape:window-y="32"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1" />
   <defs
@@ -41,7 +41,7 @@
      id="layer1">
     <path
        id="rect846"
-       style="opacity:0.9;fill:#f0bc42;stroke-width:0.793749;fill-opacity:1"
+       style="opacity:0.9;fill:#be6069;fill-opacity:1;stroke-width:0.793749"
        d="m 7.7403416,1.0094092 a 2.4798294,2.5429944 0 0 0 -3.5070083,0 2.4798294,2.5429944 0 0 0 -3.50700815,0 2.4798294,2.5429944 0 0 0 4e-8,3.5963368 L 4.2333333,8.2020833 7.7403415,4.605746 a 2.4798294,2.5429944 0 0 0 10e-8,-3.5963368 z" />
   </g>
 </svg>

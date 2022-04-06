@@ -29,11 +29,11 @@
      units="px"
      inkscape:zoom="8"
      inkscape:cx="-10.625"
-     inkscape:cy="26.1875"
+     inkscape:cy="26.125"
      inkscape:window-width="1920"
-     inkscape:window-height="1029"
+     inkscape:window-height="1018"
      inkscape:window-x="0"
-     inkscape:window-y="22"
+     inkscape:window-y="32"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1" />
   <defs
@@ -43,26 +43,26 @@
      inkscape:groupmode="layer"
      id="layer1">
     <circle
-       style="fill:#f6d78e;fill-opacity:1;stroke-width:0.302626"
+       style="fill:#edd096;fill-opacity:1;stroke-width:0.302626"
        id="path846"
        cx="6.3499999"
        cy="6.3499999"
        r="6.3499999" />
     <circle
-       style="fill:#652a33;fill-opacity:1;stroke-width:0.437853"
+       style="fill:#ae4751;fill-opacity:1;stroke-width:0.437853"
        id="path968"
        cx="6.3499999"
        cy="5.2916665"
        r="2.1166666" />
     <path
        id="path968-3"
-       style="fill:#652a33;fill-opacity:1;stroke-width:2.68918"
+       style="fill:#ae4751;fill-opacity:1;stroke-width:2.68918"
        d="m 24,29 c -7.179702,0 -13,5.837945 -13,13.017647 0.0089,0.772962 0.08664,1.552541 0.232422,2.311682 3.822895,2.409877 8.248507,3.682509 12.767578,3.688318 4.519071,-0.0058 8.944683,-1.28637 12.767578,-3.696247 C 36.913361,43.562259 36.991143,42.772962 37,42 37,34.820298 31.179702,29 24,29 Z"
        transform="scale(0.26458333)"
        sodipodi:nodetypes="scccccs" />
     <path
        id="circle1100"
-       style="fill:#652a33;stroke-width:0.481632;fill-opacity:1"
+       style="fill:#ae4751;fill-opacity:1;stroke-width:0.481632"
        d="m 8.6783052,5.3231791 c 0,1.2858875 -1.0424178,-0.010029 -2.3283053,-0.010029 -1.2858875,0 -2.3283053,1.2959188 -2.3283053,0.010029 0,-1.2858875 1.0424178,-2.3283053 2.3283053,-2.3283053 1.2858875,0 2.3283053,1.0424178 2.3283053,2.3283053 z"
        sodipodi:nodetypes="sssss" />
   </g>

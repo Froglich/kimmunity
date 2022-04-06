@@ -41,7 +41,7 @@
      id="layer1">
     <path
        id="rect846"
-       style="fill:#f3c969;fill-opacity:1;stroke-width:4.12037;stroke-linecap:round"
+       style="fill:#edd096;fill-opacity:1;stroke-width:4.12037;stroke-linecap:round"
        d="m 6,8 c -1.108,0 -2,0.892 -2,2 0,1.108 0.892,2 2,2 h 16 c 1.108,0 2,-0.892 2,-2 0,-1.108 -0.892,-2 -2,-2 z m 0,6 c -1.108,0 -2,0.892 -2,2 0,1.108 0.892,2 2,2 h 12 c 1.108,0 2,-0.892 2,-2 0,-1.108 -0.892,-2 -2,-2 z m 0,6 c -1.108,0 -2,0.892 -2,2 0,1.108 0.892,2 2,2 h 20 c 1.108,0 2,-0.892 2,-2 0,-1.108 -0.892,-2 -2,-2 z"
        transform="scale(0.26458331)" />
   </g>
