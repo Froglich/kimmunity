@@ -477,7 +477,7 @@ func setPassword(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if len([]rune(password)) < 8 {
+	if len([]rune(password)) < 6 {
 		w.WriteHeader(http.StatusNotAcceptable)
 		fmt.Fprint(w, "short password")
 		return
