@@ -251,8 +251,8 @@
             let displayName = document.querySelector('#displayName')
             let acceptPolicy = document.querySelector('#acceptPolicy');
             function signUp() {
-                let usernameValue = registerUsername.value.trim();
-                let emailValue = email.value.trim();
+                let usernameValue = registerUsername.value.toLowerCase().trim();
+                let emailValue = email.value.toLowerCase().trim();
                 let nameValue = displayName.value.trim();
                 
                 let badUsernameDialog = () => {
@@ -310,7 +310,7 @@
             let password = document.querySelector('#password');
             let remember = document.querySelector('#remember');
             function logIn() {
-                let loginValue = login.value.trim();
+                let loginValue = login.value.toLowerCase().trim();
                 let passwordValue = password.value;
 
                 if(loginValue == "") {
