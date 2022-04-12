@@ -8,17 +8,18 @@ button,
 tabs,
 label.filelbl {
 	font-family: 'Fira Sans', sans-serif;
-	border-style: none;
+	border-style: solid;
+	border-color: var(--bg-alt3);
 	appearance: none;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	-o-appearance: none;
 	outline: none;
+	-webkit-transition: 0.2s;
 	transition: 0.2s;
+	background-color: var(--bg3);
 	color: var(--fg);
 	font-size: 10pt;
-	border-style: solid;
-	border-width: 1px 1px 1px 1px;
 }
 
 input:disabled,
@@ -27,9 +28,59 @@ textarea:disabled,
 abutton:disabled,
 .abutton:disabled,
 .asubmit:disabled {
-	opacity: 0.3;
+	opacity: 0.6;
 	box-shadow: none !important;
-	cursor: auto !important;
+}
+
+input[type=checkbox],
+input[type=radio],
+select[multiple],
+textarea,
+tabs {
+	border-width: 1px 1px 1px 1px;
+}
+
+input[type=button],
+input[type=submit],
+button,
+abutton,
+.abutton,
+.asubmit,
+label.filelbl,
+select:not([multiple]) {
+	border-width: 1px 1px 3px 1px;
+}
+
+abutton.search {
+    padding-left: 32px;
+    background-image: url('../images/search.svg');
+    background-repeat: no-repeat;
+    background-position: center left;
+    background-size: 32px 32px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+input[type=file] {
+	border-width: 0px;
+}
+
+select[multiple], textarea {
+	background-color: var(--bg3);
+}
+
+select,
+textarea,
+input:not([type=checkbox]):not([type=radio]):not([type=button]):not([type=submit]) {
+	border-radius: 0px;
+}
+
+input[type=text].search {
+	padding-left: 32px !important;
+	background-image: url('../images/search.svg');
+	background-position: center left;
+	background-repeat: no-repeat;
 }
 
 select:-ms-expand {
@@ -55,20 +106,8 @@ input[type=email],
 input[type=number],
 input[type=date],
 input[type=time],
-input[type=password],
-input[type=checkbox],
-input[type=radio],
-select[multiple],
-textarea {
-	border-color: var(--bg-alt1);
-	background-color: var(--bg2);;
-}
-
-input[type=text].search {
-	padding-left: 32px !important;
-	background-image: url('../images/search.svg');
-	background-position: center left;
-	background-repeat: no-repeat;
+input[type=password] {
+	border-width: 0px 0px 2px 0px;
 }
 
 input[type=text]:not(:disabled):hover,
@@ -81,7 +120,7 @@ input[type=checkbox]:not(:disabled):hover,
 input[type=radio]:not(:disabled):hover,
 select[multiple]:not(:disabled):hover,
 textarea:not(:disabled):hover {
-	border-color: var(--bg-alt4);
+	border-color: var(--bg-alt5);
 }
 
 input[type=text]:not(:disabled):focus,
@@ -102,8 +141,7 @@ input[type=radio]:not(:disabled):focus,
 input[type=radio]:not(:disabled):active,
 textarea:not(:disabled):focus,
 textarea:not(:disabled):active {
-	border-color: var(--fg-alt3);
-	box-shadow: inset 0px 1px 2px var(--bg3);
+	border-color: var(--bg-alt4);
 }
 
 input[type=checkbox],
@@ -120,9 +158,14 @@ input[type=checkbox]::before, input[type=checkbox]::after {
 	width: 20px;
 	top: 9px;
 	left: 1px;
-	background-color: var(--bg-alt4);
+	background-color: var(--bg-alt3);
 	-webkit-transition: 0.2s;
 	transition: 0.2s;
+}
+
+input[type=checkbox]:hover::before, input[type=checkbox]:hover::after,
+input[type=checkbox]:focus::before, input[type=checkbox]:focus::after {
+	background-color: var(--bg-alt6);
 }
 
 input[type=checkbox]::before {
@@ -155,9 +198,14 @@ input[type=radio]::before {
 	border-radius: 50%;
 	top: 3px;
 	left: 3px;
-	background-color: var(--bg-alt4);
+	background-color: var(--bg-alt3);
 	-webkit-transition: 0.2s;
 	transition: 0.2s;
+}
+
+input[type=radio]:hover::before,
+input[type=radio]:focus::before {
+	background-color: var(--bg-alt6);
 }
 
 input[type=radio]:checked::before {
@@ -170,34 +218,15 @@ input[type=radio]:not(:checked)::before {
 
 input[type=button],
 select:not([multiple]),
-abutton,
+abutton
 .abutton,
 button,
 tabs,
 label.filelbl {
-	background-image: linear-gradient(var(--bg-alt1), var(--bg-alt2));
+	border-color: var(--bg-alt3);
 	display: inline-block;
-	cursor: pointer;
 	color: var(--fg);
 	text-decoration: none;
-	border-color: var(--bg-alt1);
-}
-
-abutton {
-	text-align: center;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-
-input[type=submit],
-.asubmit {
-	background-image: linear-gradient(var(--bg-alt4), var(--bg-alt5));
-	display: inline-block;
-	cursor: pointer;
-	color: var(--fg);
-	text-decoration: none;
-	border-color: var(--bg-alt4);
 }
 
 input[type=button],
@@ -209,6 +238,15 @@ button {
 	padding: 0px 8px 0px 8px;
 }
 
+input[type=button]:not(:disabled),
+input[type=submit]:not(:disabled),
+abutton:not(:disabled),
+.abutton:not(:disabled),
+.asubmit:not(:disabled),
+button:not(:disabled) {
+	cursor: pointer;
+}
+
 input[type=button],
 input[type=submit],
 abutton,
@@ -216,13 +254,10 @@ abutton,
 .asubmit,
 button,
 label.filelbl {
-	font-weight: bold;
 	display: inline-block;
 	line-height: 28px;
 	border-radius: 4px;
 }
-
-
 
 label.filelbl {
 	padding: 0px 8px 0px 32px;
@@ -230,9 +265,9 @@ label.filelbl {
 
 select:not([multiple]) {
 	padding: 0px 32px 0px 8px;
-	background-image: url('../images/arrowdown.svg');
+	background-image: url('../images/arrowdown.svg?');
 	line-height: 30px;
-	border-radius: 8px;
+	border-radius: 4px;
 	background-size: 32px 32px;
 	background-position: center right;
 	background-repeat: no-repeat;
@@ -247,35 +282,58 @@ abutton:not(:disabled):focus,
 .abutton:not(:disabled):hover,
 .abutton:not(:disabled):focus,
 label.filelbl:not(:disabled):hover,
-label.filelbl:not(:disabled):focus,
+label.filelbl:not(:disabled):focus {
+	border-color: var(--bg-alt1);
+}
+
+input[type=button]:not(:disabled):active,
+button:not(:disabled):active,
+abutton:not(:disabled):active,
+.abutton:not(:disabled):active,
+label.filelbl:not(:disabled):active,
+select:not([multiple]):not(:disabled):active {
+	background-color: var(--bg-alt3);
+}
+
 select:not([multiple]):not(:disabled):hover,
 select:not([multiple]):not(:disabled):focus,
 tabs:hover,
-tabs:focus,
+tabs:focus {
+	border-color: var(--bg-alt1);
+}
+
+input[type=button],
+input[type=submit],
+button,
+abutton,
+.abutton,
+.asubmit,
+label.filelbl {
+	font-weight: bold;
+}
+
+input[type=submit], .asubmit {
+	border-color: var(--bg-alt6);
+	display: inline-block;
+	color: var(--fg);
+	font-weight: bold;
+	text-decoration: none;
+}
+
 input[type=submit]:not(:disabled):focus,
 input[type=submit]:not(:disabled):hover,
 .asubmit:not(:disabled):focus,
 .asubmit:not(:disabled):hover {
-	box-shadow: 0px 0px 4px var(--bg3);
+	border-color: var(--bg-alt4);
 }
 
-input[type=button]:not(:disabled):active,
-select:not([multiple]):not(:disabled):active,
-button:not(:disabled):active,
-abutton:not(:disabled):active,
-.abutton:not(:disabled):active,
 input[type=submit]:not(:disabled):active,
 .asubmit:not(:disabled):active {
-	box-shadow: inset 0px 0px 4px var(--bg3);
+	background-color: var(--bg-alt6);
 }
 
-input[type=button],
-button,
-abutton,
-.abutton,
-label.filelbl {
-	color: var(--fg);
-	font-weight: bold;
+abutton {
+	display: inline-block;
 }
 
 abutton, tabs {
@@ -329,7 +387,7 @@ tabs {
 	position: relative;
 	overflow: hidden;
 	display: flex;
-	border-radius: 8px;
+	border-radius: 4px;
 }
 
 tabs input[type=radio] {
@@ -349,16 +407,16 @@ tabs label.tab {
 	text-align: center;
 	border-style: solid;
 	border-width: 0px 0px 3px 0px;
-	border-color: var(--bg1);
+	border-color: var(--bg-alt3);
 }
 
 tabs label.tab:hover,
 tabs label.tab:focus {
-	border-color: var(--fg);
+	border-color: var(--bg-alt1);
 }
 
 tabs input[type=radio]:checked+label.tab, label.tab:active {
-	border-color: var(--fg);
+	border-color: var(--fg-alt3);
 }
 
 div.selectable {
@@ -385,7 +443,7 @@ div.selectable label {
 	-moz-transition: background-color 0.2s, color 0.2s;
 	-ms-transition: background-color 0.2s, color 0.2s;
 	-o-transition: background-color 0.2s, color 0.2s;
-	border-radius: 8px;
+	border-radius: 4px;
 }
 
 div.selectable label::before {
@@ -412,7 +470,7 @@ div.selectable input[type=checkbox] {
 
 div.selectable input[type=checkbox]:checked ~ label {
 	border-color: var(--bg-alt2);
-	background-color: var(--bg-alt3);
+	background-color: var(--bg-alt1);
 }
 
 div.selectable input[type=checkbox]:checked ~ label::before {
